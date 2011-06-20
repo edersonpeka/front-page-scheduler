@@ -6,7 +6,7 @@ Tested up to: 3.1.3
 Stable tag: 0.1
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Media%20Downloader%20Wordpress%20Plugin
 
-Let you choose an alternate static front page to be shown during a specific daily period. Portuguese: Permite o agendamento de uma pagina inicial alternativa para ser exibida durante um periodo diário específico.
+Choose an alternate static front page to a specific daily period. Agendamento de página inicial alternativa para periodo diário específico.
 
 == Description ==
 
