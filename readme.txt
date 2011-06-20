@@ -1,4 +1,4 @@
-=== Media Downloader ===
+=== Front Page Scheduler ===
 Contributors: Ederson Peka
 Tags: frontpage, scheduler, schedule, CMS, front page
 Requires at least: 3.0
