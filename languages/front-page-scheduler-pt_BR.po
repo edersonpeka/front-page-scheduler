@@ -1,0 +1,34 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-04-21 14:53:45+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period."
+msgstr "O plugin <em>Front Page Scheduler</em> permite que você escolha uma página inicial alternativa para ser exibida durante um período diário específico."
+
+msgid "Alternate Front Page Scheduler"
+msgstr "Agendador de Página Inicial Alternativa"
+
+msgid "Alternate Front Page"
+msgstr "Página Inicial Alternativa"
+
+msgid "Start at"
+msgstr "Começar às"
+
+msgid "Stop at"
+msgstr "Encerrar às"
+
+msgid "You can choose an alternate static front page to be shown during a specific daily period."
+msgstr "Você pode escolher uma página inicial alternativa para ser exibida durante um período diário específico."
+
+msgid "(Using timezone defined in <a href=\"%s\">general settings.</a>)"
+msgstr "(Utiliza o fuso horário definido nas <a href=\"%s\">configurações gerais.</a>)"
+
+msgid "&mdash; None &mdash;"
+msgstr "&mdash; Nenhuma &mdash;"
+
+msgid "Format: <code>hh:mm</code>"
+msgstr "Formato: <code>hh:mm</code>"
+
