@@ -32,3 +32,6 @@ msgstr "&mdash; Nenhuma &mdash;"
 msgid "Format: <code>hh:mm</code>"
 msgstr "Formato: <code>hh:mm</code>"
 
+msgid "Settings"
+msgstr "Configurações"
+

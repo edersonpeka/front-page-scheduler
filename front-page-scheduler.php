@@ -104,6 +104,8 @@ class front_page_scheduler {
         add_settings_field( 'front_page_scheduler_start', __( 'Start at', 'front-page-scheduler' ), array( __CLASS__, 'start' ), 'reading', 'front_page_scheduler_settings', array( 'label_for' => 'front_page_scheduler_start' ) );
         add_settings_field( 'front_page_scheduler_stop', __( 'Stop at', 'front-page-scheduler' ), array( __CLASS__, 'stop' ), 'reading', 'front_page_scheduler_settings', array( 'label_for' => 'front_page_scheduler_stop' ) );
 
+        // Create "settings" link for this plugin on plugins list
+        add_filter( 'plugin_action_links', array( __CLASS__, 'settings_link' ), 10, 2 );
     }
 
     // Description of our "new section"
@@ -186,6 +188,17 @@ class front_page_scheduler {
                 $t = substr( '0' . $hora, -2 ) . ':' . substr( '0' . $minuto, -2 );
         }
         return $t;
+    }
+
+    // Add Settings link to plugins - code from GD Star Ratings
+    // (as seen in http://www.whypad.com/posts/wordpress-add-settings-link-to-plugins-page/785/ )
+    function settings_link( $links, $file ) {
+        $this_plugin = plugin_basename(__FILE__);
+        if ( $file == $this_plugin ) {
+            $settings_link = '<a href="' . admin_url( 'options-reading.php' ) . '">' . __( 'Settings', 'front-page-scheduler' ) . '</a>';
+            array_unshift( $links, $settings_link );
+        }
+        return $links;
     }
 
 }
