@@ -6,7 +6,7 @@ Tested up to: 4.2.1
 Stable tag: 0.1.1
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Front%20Page%20Scheduler%20Wordpress%20Plugin
 
-Choose an alternate static front page to a specific daily period. Agendamento de página inicial alternativa para periodo diário específico.
+Choose an alternate static front page to a specific daily period. Agendamento de página inicial alternativa para período diário específico.
 
 == Description ==
 
