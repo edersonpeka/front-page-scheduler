@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: http://ederson.peka.nom.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.1
+Version: 0.1.2
 Author: Ederson Peka
 Author URI: http://ederson.peka.nom.br
 Text Domain: front-page-scheduler
@@ -33,16 +33,16 @@ class front_page_scheduler {
     //   WordPress to show the specified page.
     function override_option_show_on_front( $what ){
 
-        // Is it set to show the latest posts? And 
+        // Is it set to show the latest posts? And
         if ( 'posts' == $what ) :
             // Is it time to show the alternate front page?
             //   So let's override the option with our specified page.
             $override = call_user_func( array( __CLASS__, 'override_option_page_on_front' ), 0 );
             if ( $override ) $what = 'page';
         endif;
-        
+
         return $what;
-        
+
     }
 
     // Filtering the "which page to show on your site's front" option:
@@ -52,7 +52,7 @@ class front_page_scheduler {
 
         // Let's not mess with the settings screen...
         if ( !is_admin() ) {
-        
+
             // saved options
             $options = get_option( 'front_page_scheduler_options' );
             // alternate page
@@ -63,27 +63,41 @@ class front_page_scheduler {
             $ps_start = call_user_func( $func_valid_time, $options[ 'front_page_scheduler_start' ] );
             // get time to stop
             $ps_stop = call_user_func( $func_valid_time, $options[ 'front_page_scheduler_stop' ] );
-            
+            // get weekday to stop
+            $op_weekday = $options[ 'front_page_scheduler_weekday' ];
+
             // if alternate page exists
             if ( $ps_page && get_page( $ps_page ) ) {
-            
+
                 // clean the numbers
                 $ps_start = intval( str_replace( ':', '', $ps_start ) );
                 $ps_stop = intval( str_replace( ':', '', $ps_stop ) );
+                if ( !is_array( $op_weekday ) ) $op_weekday = explode( ',', $op_weekday );
+                $ps_weekday = array_filter( $op_weekday, 'is_numeric' );
+                if ( !$ps_weekday ) $ps_weekday = array( 0 );
                 // set timezone
                 if ( $tz = get_option( 'timezone_string' ) ) date_default_timezone_set( $tz );
                 // get the time
                 $tnow = intval( date( 'Hi' ) );
-                
+                // get the week day (today)
+                $twday = intval( date( 'w' ) ) + 1;
+                // get the week day (yesterday)
+                $twyes = ( ( $twday + 6 ) % 8 ) + 1;
+
                 // if our chosen period crosses the midnight, and we're
                 //   in it, let's return the alternate page id
-                if ( $ps_start > $ps_stop && ( $tnow >= $ps_start || $tnow <= $ps_stop ) )
-                    $frontpage = $ps_page;
-                    
+                if ( $ps_start > $ps_stop ) {
+                    $showtoday = in_array( 0, $ps_weekday ) || in_array( $twday, $ps_weekday );
+                    $showyesterday = in_array( 0, $ps_weekday ) || in_array( $twyes, $ps_weekday );
+                    if ( ( ( $tnow >= $ps_start ) && $showtoday ) || ( ( $tnow <= $ps_stop ) && $showyesterday ) )
+                        $frontpage = $ps_page;
+                }
+
                 // if it doesn't cross the midnight, and we're in it,
                 //   let's return the alternate page id too
                 if ( $ps_stop > $ps_start && $tnow >= $ps_start && $tnow <= $ps_stop )
-                    $frontpage = $ps_page;
+                    if ( in_array( 0, $ps_weekday ) || in_array( $twday, $ps_weekday ) )
+                        $frontpage = $ps_page;
 
             }
 
@@ -102,10 +116,13 @@ class front_page_scheduler {
         // Adding fields to our "options group"
         add_settings_field( 'front_page_scheduler_page', __( 'Alternate Front Page', 'front-page-scheduler' ), array( __CLASS__, 'page' ), 'reading', 'front_page_scheduler_settings', array( 'label_for' => 'front_page_scheduler_page' ) );
         add_settings_field( 'front_page_scheduler_start', __( 'Start at', 'front-page-scheduler' ), array( __CLASS__, 'start' ), 'reading', 'front_page_scheduler_settings', array( 'label_for' => 'front_page_scheduler_start' ) );
+        add_settings_field( 'front_page_scheduler_weekday', __( 'Week Days', 'front-page-scheduler' ), array( __CLASS__, 'weekday' ), 'reading', 'front_page_scheduler_settings' );
         add_settings_field( 'front_page_scheduler_stop', __( 'Stop at', 'front-page-scheduler' ), array( __CLASS__, 'stop' ), 'reading', 'front_page_scheduler_settings', array( 'label_for' => 'front_page_scheduler_stop' ) );
 
         // Create "settings" link for this plugin on plugins list
         add_filter( 'plugin_action_links', array( __CLASS__, 'settings_link' ), 10, 2 );
+        // Inject some javascript
+        add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
     }
 
     // Description of our "new section"
@@ -131,6 +148,18 @@ class front_page_scheduler {
         $options = get_option( 'front_page_scheduler_options' );
         echo '<input type="text" id="front_page_scheduler_stop" name="front_page_scheduler_options[front_page_scheduler_stop]" value="' . $options[ 'front_page_scheduler_stop' ] . '" maxlength="5" size="5" /> <p class="description">' . __( 'Format: <code>hh:mm</code>', 'front-page-scheduler' ) . '</p>';
     }
+    // Week Day field's markup
+    function weekday() {
+        $ws = array( '<strong>Everyday</strong>', 'Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays' );
+        $options = get_option( 'front_page_scheduler_options' );
+        $days = $options[ 'front_page_scheduler_weekday' ];
+        if ( !is_array( $days ) ) $days = array( 0 );
+        $wid = 0;
+        foreach ( $ws as $w ) :
+            echo '<label for="front_page_scheduler_weekday_' . $wid . '"><input type="checkbox" id="front_page_scheduler_weekday_' . $wid . '" value="' . $wid . '" name="front_page_scheduler_options[front_page_scheduler_weekday][]" ' . ( ( in_array( $wid, $days ) || in_array( 0, $days ) ) ? ' checked="checked"' : '' ) . ' /> ' . __( $w, 'front-page-scheduler' ) . '</label><br />';
+            $wid++;
+        endforeach;
+    }
 
     // Sanitize our options
     function options_sanitize( $input ) {
@@ -145,23 +174,28 @@ class front_page_scheduler {
         $ps_start = call_user_func( $func_valid_time, $input[ 'front_page_scheduler_start' ] );
         // get time to stop
         $ps_stop = call_user_func( $func_valid_time, $input[ 'front_page_scheduler_stop' ] );
-        
+        // get week day
+        $ps_weekday = array_filter( $input[ 'front_page_scheduler_weekday' ], 'is_numeric' );
+        if ( in_array( 0, $ps_weekday ) ) $ps_weekday = array( 0 );
+
         // if alternate page was set
         if ( $ps_page ) {
-        
+
             // save the options
             $options[ 'front_page_scheduler_page' ] = $ps_page;
             $options[ 'front_page_scheduler_start' ] = $ps_start;
             $options[ 'front_page_scheduler_stop' ] = $ps_stop;
-        
+            $options[ 'front_page_scheduler_weekday' ] = $ps_weekday;
+
         // else
         } else {
-        
+
             // clean the options
             $options[ 'front_page_scheduler_page' ] = '';
             $options[ 'front_page_scheduler_start' ] = '';
             $options[ 'front_page_scheduler_stop' ] = '';
-        
+            $options[ 'front_page_scheduler_weekday' ] = false;
+
         }
         return $options;
     }
@@ -199,6 +233,35 @@ class front_page_scheduler {
             array_unshift( $links, $settings_link );
         }
         return $links;
+    }
+
+    function admin_enqueue_scripts( $suff ) {
+        if ( 'options-reading.php' == $suff ) {
+            ?>
+            <script type="text/javascript">
+            var front_page_scheduler_winps = false;
+            function front_page_scheduler_winps_change() {
+                var winps = front_page_scheduler_winps;
+                if ( jQuery( this ).is( '#front_page_scheduler_weekday_0' ) ) {
+                    winps.attr( 'checked', jQuery( this ).attr( 'checked' ) ? 'checked' : false );
+                } else {
+                    var wall = true;
+                    winps.each( function () {
+                        if ( !jQuery( this ).is( '#front_page_scheduler_weekday_0' ) ) {
+                            wall = wall && jQuery( this ).attr( 'checked' );
+                        }
+                        return wall;
+                    } );
+                    console.log( wall ? 'marca' : 'desmarca' );
+                    jQuery( '#front_page_scheduler_weekday_0' ).attr( 'checked', wall ? 'checked' : false );
+                }
+            }
+            window.onload = function () {
+                front_page_scheduler_winps = jQuery( 'input[name="front_page_scheduler_options[front_page_scheduler_weekday][]"]' ).change( front_page_scheduler_winps_change );
+            };
+            </script>
+            <?php
+        }
     }
 
 }

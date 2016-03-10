@@ -3,17 +3,17 @@ Contributors: Ederson Peka
 Tags: frontpage, scheduler, schedule, CMS, front page
 Requires at least: 3.0
 Tested up to: 4.4.2
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Front%20Page%20Scheduler%20Wordpress%20Plugin
 
 Choose an alternate static front page to a specific daily period. Agendamento de página inicial alternativa para período diário específico.
 
 == Description ==
 
-Front Page Scheduler let you choose some page to be shown as the front page of your site during a specific daily period. In this first version, you cannot choose any other "rule": it changes the front page at the same time, every day. Period.
+Front Page Scheduler let you choose some page to be shown as the front page of your site during a specific daily period, in specific week days. In this first version, you cannot choose any other "rule": it changes the front page at the same time, in the chosen days. Period.
 
 = Portuguese: Descrição =
-O plugin Front Page Scheduler permite que você escolha uma página para ser exibida como página inicial de seu site durante um período diário específico. Nesta primeira versão, você não pode formular nenhuma outra "regra": ele muda a página inicial na mesma hora, todos os dias. Ponto final.
+O plugin Front Page Scheduler permite que você escolha uma página para ser exibida como página inicial de seu site durante um período diário específico, em dias da semana específicos. Nesta primeira versão, você não pode formular nenhuma outra "regra": ele muda a página inicial na mesma hora, nos dias escolhidos. Ponto final.
 
 == Installation ==
 
@@ -29,4 +29,3 @@ O plugin Front Page Scheduler permite que você escolha uma página para ser exi
 3. Acesse o painel do WordPress e vá para a seção 'Plugins'. Agora você já deve ver o Front Page Scheduler na lista de plugins disponíveis
 4. Ative o plugin clicando no link 'ativar'
 5. Agora vá até a seção 'Configurações' e selecione 'Leitura', onde você pode configurar sua página inicial alternativa
-
