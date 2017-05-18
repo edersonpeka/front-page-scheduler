@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: http://ederson.peka.nom.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.2
+Version: 0.1.3
 Author: Ederson Peka
 Author URI: http://ederson.peka.nom.br
 Text Domain: front-page-scheduler
@@ -150,15 +150,31 @@ class front_page_scheduler {
     }
     // Week Day field's markup
     function weekday() {
-        $ws = array( '<strong>Everyday</strong>', 'Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays' );
+        $ws = array( 'Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays' );
+        $start_of_week = intval( '0' . get_option( 'start_of_week' ) );
+        if ( !isset( $start_of_week ) || !is_int( $start_of_week ) || $start_of_week > 6 || $start_of_week < 0 ) $start_of_week = 0;
+        $ws = array_merge( array( '<strong>Everyday</strong>' ), array_slice( $ws, $start_of_week ), array_slice( $ws, 0, $start_of_week ) );
         $options = get_option( 'front_page_scheduler_options' );
         $days = $options[ 'front_page_scheduler_weekday' ];
         if ( !is_array( $days ) ) $days = array( 0 );
-        $wid = 0;
-        foreach ( $ws as $w ) :
-            echo '<label for="front_page_scheduler_weekday_' . $wid . '"><input type="checkbox" id="front_page_scheduler_weekday_' . $wid . '" value="' . $wid . '" name="front_page_scheduler_options[front_page_scheduler_weekday][]" ' . ( ( in_array( $wid, $days ) || in_array( 0, $days ) ) ? ' checked="checked"' : '' ) . ' /> ' . __( $w, 'front-page-scheduler' ) . '</label><br />';
-            $wid++;
-        endforeach;
+        echo '<table class="front_page_scheduler_weekday_table">';
+        echo '<tbody>';
+        echo '<tr>';
+            $wid = 0;
+            foreach ( $ws as $w ) :
+                echo '<td><label for="front_page_scheduler_weekday_' . $wid . '">' . __( $w, 'front-page-scheduler' ) . '</label></td>';
+                $wid++;
+            endforeach;
+        echo '</tr>';
+        echo '<tr>';
+            $wid = 0;
+            foreach ( $ws as $w ) :
+                echo '<td><input type="checkbox" id="front_page_scheduler_weekday_' . $wid . '" value="' . $wid . '" name="front_page_scheduler_options[front_page_scheduler_weekday][]" ' . ( ( in_array( $wid, $days ) || in_array( 0, $days ) ) ? ' checked="checked"' : '' ) . ' /></td>';
+                $wid++;
+            endforeach;
+        echo '</tr>';
+        echo '</tbody>';
+        echo '</table>';
     }
 
     // Sanitize our options
@@ -260,6 +276,10 @@ class front_page_scheduler {
                 front_page_scheduler_winps = jQuery( 'input[name="front_page_scheduler_options[front_page_scheduler_weekday][]"]' ).change( front_page_scheduler_winps_change );
             };
             </script>
+            <style rel="stylesheet" type="text/css">
+            .front_page_scheduler_weekday_table { border-collapse: collapse; }
+            .front_page_scheduler_weekday_table td { border: 1px solid #CCC; }
+            </style>
             <?php
         }
     }
