@@ -6,14 +6,12 @@ Tested up to: 4.7.5
 Stable tag: 0.1.4
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Front%20Page%20Scheduler%20Wordpress%20Plugin
 
-Choose an alternate static front page to a specific daily period. Agendamento de página inicial alternativa para período diário específico.
+Choose an alternate static front page to a specific daily period.
 
 == Description ==
 
 Front Page Scheduler let you choose some page to be shown as the front page of your site during a specific daily period, in specific week days. Since version 0.1.4, you can even create a set of "rules", choosing specific front pages for different days and periods.
 
-= Portuguese: Descrição =
-O plugin Front Page Scheduler permite que você escolha uma página para ser exibida como página inicial de seu site durante um período diário específico, em dias da semana específicos. A partir da versão 0.1.4, você pode inclusive criar uma série de "regras", escolhendo páginas iniciais específicas para dias e períodos diferentes.
 
 == Installation ==
 
@@ -22,10 +20,3 @@ O plugin Front Page Scheduler permite que você escolha uma página para ser exi
 3. Log in to your WordPress admin and got to the 'Plugins' section. You should now see Front Page Scheduler in the list of available plugins
 4. Activate the plugin by clicking the 'activate' link
 5. Now go to the 'Settings' section and select 'Reading', where you can configure your alternate front page
-
-= Portuguese: Instalação =
-1. Extraia o conteúdo do arquivo
-2. Faça upload do conteúdo do diretório front-page-scheduler para dentro do diretório 'wp-content/plugins'
-3. Acesse o painel do WordPress e vá para a seção 'Plugins'. Agora você já deve ver o Front Page Scheduler na lista de plugins disponíveis
-4. Ative o plugin clicando no link 'ativar'
-5. Agora vá até a seção 'Configurações' e selecione 'Leitura', onde você pode configurar sua página inicial alternativa
