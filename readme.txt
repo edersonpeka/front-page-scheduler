@@ -10,10 +10,10 @@ Choose an alternate static front page to a specific daily period. Agendamento de
 
 == Description ==
 
-Front Page Scheduler let you choose some page to be shown as the front page of your site during a specific daily period, in specific week days. In this first version, you cannot choose any other "rule": it changes the front page at the same time, in the chosen days. Period.
+Front Page Scheduler let you choose some page to be shown as the front page of your site during a specific daily period, in specific week days. Since version 0.1.4, you can even create a set of "rules", choosing specific front pages for different days and periods.
 
 = Portuguese: Descrição =
-O plugin Front Page Scheduler permite que você escolha uma página para ser exibida como página inicial de seu site durante um período diário específico, em dias da semana específicos. Nesta primeira versão, você não pode formular nenhuma outra "regra": ele muda a página inicial na mesma hora, nos dias escolhidos. Ponto final.
+O plugin Front Page Scheduler permite que você escolha uma página para ser exibida como página inicial de seu site durante um período diário específico, em dias da semana específicos. A partir da versão 0.1.4, você pode inclusive criar uma série de "regras", escolhendo páginas iniciais específicas para dias e períodos diferentes.
 
 == Installation ==
 
