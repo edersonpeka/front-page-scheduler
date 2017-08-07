@@ -76,9 +76,10 @@ jQuery( function () {
                 var _remove_btn = jQuery( this );
                 // remove all the rule section
                 _remove_btn.parents( 'table.front_page_scheduler_rule_table' ).first().fadeOut( 'fast', function () {
+                    _remove_btn_parent = jQuery( this ).parent();
                     jQuery( this ).remove();
                     // and update the hidden value
-                    _fps_strings.update_json( _remove_btn );
+                    _fps_strings.update_json( _remove_btn_parent );
                 } );
             }
             // and do not submit the form
