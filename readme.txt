@@ -1,8 +1,8 @@
 === Front Page Scheduler ===
 Contributors: Ederson Peka
 Tags: frontpage, scheduler, schedule, CMS, front page
-Requires at least: 3.0
-Tested up to: 4.9.7
+Requires at least: 4.0
+Tested up to: 4.9.8
 Stable tag: 0.1.5
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Front%20Page%20Scheduler%20Wordpress%20Plugin
 
