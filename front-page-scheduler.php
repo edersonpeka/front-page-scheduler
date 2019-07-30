@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: http://ederson.peka.nom.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.5
+Version: 0.1.6
 Author: Ederson Peka
 Author URI: http://ederson.peka.nom.br
 Text Domain: front-page-scheduler
@@ -14,7 +14,7 @@ if ( !class_exists( 'front_page_scheduler' ) ) :
 class front_page_scheduler {
 
     // Init
-    function init() {
+    public static function init() {
         // Internationalization
         load_plugin_textdomain( 'front-page-scheduler', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -31,7 +31,7 @@ class front_page_scheduler {
     //   if it's set to show the last posts, and now it's time to show
     //   the alternate front page, we override the option, telling
     //   WordPress to show the specified page.
-    function override_option_show_on_front( $what ) {
+    public static function override_option_show_on_front( $what ) {
 
         // Is it set to show the latest posts? And
         if ( 'posts' == $what ) :
@@ -48,7 +48,7 @@ class front_page_scheduler {
     // Filtering the "which page to show on your site's front" option:
     //   if now it's time to show the alternate front page, we override
     //   the option, telling WordPress to show our alternate page.
-    function override_option_page_on_front( $frontpage ) {
+    public static function override_option_page_on_front( $frontpage ) {
 
         // Thou shalt not mess with the settings screen...
         if ( !is_admin() ) {
@@ -211,7 +211,7 @@ class front_page_scheduler {
     }
 
     // Validate time input
-    function valid_time( $t ) {
+    public static function valid_time( $t ) {
 
         // remove invalid chars
         $t = preg_replace( '/[^0-9:]/im', '', $t );
