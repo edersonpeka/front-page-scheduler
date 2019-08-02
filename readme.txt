@@ -1,5 +1,5 @@
 === Front Page Scheduler ===
-Contributors: edersonpeka, Benjamin Benkert
+Contributors: edersonpeka, benjaminbenkert
 Tags: frontpage, scheduler, schedule, CMS, front page
 Requires at least: 4.0
 Tested up to: 5.2.2
@@ -11,6 +11,8 @@ Choose an alternate static front page to a specific daily period.
 == Description ==
 
 Front Page Scheduler let you choose some page to be shown as the front page of your site during a specific daily period, in specific week days. Since version 0.1.4, you can even create a set of "rules", choosing specific front pages for different days and periods.
+
+*Update:* Benjamin Benkert fixed some bugs related to PHP versions 7 and greaters. Thanks!
 
 
 == Installation ==
