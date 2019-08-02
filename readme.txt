@@ -1,5 +1,5 @@
 === Front Page Scheduler ===
-Contributors: edersonpeka, benjaminbenkert
+Contributors: edersonpeka, benbenkert
 Tags: frontpage, scheduler, schedule, CMS, front page
 Requires at least: 4.0
 Tested up to: 5.2.2
