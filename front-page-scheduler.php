@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: https://ederson.peka.nom.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.6
+Version: 0.1.7
 Author: Ederson Peka
 Author URI: https://profiles.wordpress.org/edersonpeka/
 Text Domain: front-page-scheduler
@@ -124,7 +124,7 @@ class front_page_scheduler {
         return $frontpage;
     }
 
-    function admin_init() {
+    public static function admin_init() {
 
         // Creating a "new section" on "Options > Reading" screen
         add_settings_section( 'front_page_scheduler_settings', __( 'Alternate Front Page Scheduler', 'front-page-scheduler' ), array( __CLASS__, 'text' ), 'reading' );
@@ -142,13 +142,13 @@ class front_page_scheduler {
     }
 
     // Description of our "new section"
-    function text() {
+    public static function text() {
         echo '<p>' . __( 'You can choose an alternate static front page to be shown during a specific daily period.', 'front-page-scheduler' ) . '</p>';
         echo '<p class="description">' . sprintf( __( '(Using timezone defined in <a href="%s">general settings.</a>)', 'front-page-scheduler' ), admin_url( 'options-general.php' ) ) . '</p>';
     }
 
     // JSON rules markup
-    function json_field() {
+    public static function json_field() {
         // get saved options
         $options = get_option( 'front_page_scheduler_options' );
         // nothing saved?
@@ -165,7 +165,7 @@ class front_page_scheduler {
     }
 
     // Sanitize our options
-    function options_sanitize( $ops ) {
+    public static function options_sanitize( $ops ) {
         // sanitizing options array
         if ( !is_array( $ops ) ) $ops = array();
         // if we do not receive the expected format, we create an "empty" array
@@ -236,7 +236,7 @@ class front_page_scheduler {
 
     // Add Settings link to plugins - code from GD Star Ratings
     // (as seen in http://www.whypad.com/posts/wordpress-add-settings-link-to-plugins-page/785/ )
-    function settings_link( $links, $file ) {
+    public static function settings_link( $links, $file ) {
         $this_plugin = plugin_basename(__FILE__);
         if ( $file == $this_plugin ) {
             $settings_link = '<a href="' . admin_url( 'options-reading.php' ) . '">' . __( 'Settings', 'front-page-scheduler' ) . '</a>';
@@ -245,7 +245,7 @@ class front_page_scheduler {
         return $links;
     }
 
-    function admin_enqueue_scripts( $suff ) {
+    public static function admin_enqueue_scripts( $suff ) {
         // Thou shalt mess only with the "reading" settings screen...
         if ( 'options-reading.php' == $suff ) {
             // enqueue javascript file
