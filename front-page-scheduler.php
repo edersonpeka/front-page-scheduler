@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Front Page Scheduler
-Plugin URI: https://ederson.peka.nom.br
+Plugin URI: https://ederson.ferreira.tec.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
 Version: 0.1.7
 Author: Ederson Peka
