@@ -2,7 +2,7 @@
 Contributors: edersonpeka, benbenkert
 Tags: frontpage, scheduler, schedule, CMS, front page
 Requires at least: 5.0
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: 0.1.7
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Front%20Page%20Scheduler%20Wordpress%20Plugin
 
