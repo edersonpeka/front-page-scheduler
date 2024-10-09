@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: https://ederson.ferreira.tec.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.7
+Version: 0.1.8
 Author: Ederson Peka
 Author URI: https://profiles.wordpress.org/edersonpeka/
 Text Domain: front-page-scheduler
@@ -172,8 +172,13 @@ class front_page_scheduler {
         if ( !array_key_exists( 'front_page_scheduler_json', $ops ) ) $ops[ 'front_page_scheduler_json' ] = '[]';
         // initializing rules array
         $rules = array();
-        // decode received JSON
-        $inputs = json_decode( $ops[ 'front_page_scheduler_json' ], true );
+        // try to decode received JSON
+        try {
+            $inputs = json_decode( $ops[ 'front_page_scheduler_json' ], true );
+        } catch (Exception $e) {
+            // any trouble? Sets an empty array and the show must go on
+            $inputs = array();
+        }
         // iterating over groups of inputs
         foreach ( $inputs as $input ) :
             // initializing "suboptions" array

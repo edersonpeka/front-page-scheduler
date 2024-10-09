@@ -66,11 +66,11 @@ jQuery( function () {
                 <td colspan="2"><button class="button --btn-remove-rule">' + _fps_strings[ 'remove-rule' ] + '</button></td>\
                 </tr>\
                 </tfoot></table>';
-        // turning the string into an jQuery object
+        // turning the string into a jQuery object
         ret = jQuery( ret );
 
         // on click "remove" button
-        ret.find( '.--btn-remove-rule' ).on( 'click', function () {
+        ret.on( 'click', '.--btn-remove-rule', function () {
             // are you sure?
             if ( confirm( _fps_strings[ 'remove-rule-confirm' ] ) ) {
                 var _remove_btn = jQuery( this );
@@ -86,7 +86,7 @@ jQuery( function () {
             return false;
 
         // on change "days of the week" checkboxes
-        } ).end().find( '.--chk-weekday' ).on( 'change', function () {
+        } ).on( 'change', '.--chk-weekday', function () {
             var _parent_table = jQuery( this ).parents( 'table.front_page_scheduler_rule_table' );
             // avoid auto-clicking loop
             if ( !_parent_table.hasClass( '--changing-checkboxes' ) ) {
@@ -95,9 +95,9 @@ jQuery( function () {
                 // all checkboxes
                 var _winps = jQuery( '.--chk-weekday', _parent_table );
                 // is this the "everyday" checkbox?
-                if ( jQuery( this ).attr( 'value' ) == 0 ) {
+                if ( jQuery( this ).prop( 'value' ) == 0 ) {
                     // turn all checkboxes on or off
-                    _winps.attr( 'checked', jQuery( this ).attr( 'checked' ) ? 'checked' : false );
+                    _winps.prop( 'checked', jQuery( this ).is( ':checked' ) ? 'checked' : false );
                 // is this a "regular" checkbox?
                 } else {
                     // assume all checkboxes are checked
@@ -105,12 +105,12 @@ jQuery( function () {
                     // each checkbox
                     _winps.each( function () {
                         // if it's not the "everyday" checkbox, and this is not checked, then not all checkboxes are checked
-                        if ( !( jQuery( this ).attr( 'value' ) == 0 ) ) _wall = _wall && ( jQuery( this ).attr( 'checked' ) ? true : false );
+                        if ( !( jQuery( this ).prop( 'value' ) == 0 ) ) _wall = _wall && ( jQuery( this ).is( ':checked' ) ? true : false );
                         // if not all checkboxes are checked, we already know what we need
                         if ( !_wall ) return;
                     } );
                     // turn the "everyday" checkbox on or off
-                    _winps.filter( '[value="0"]' ).attr( 'checked', _wall ? 'checked' : false );
+                    _winps.filter( '[value="0"]' ).prop( 'checked', _wall ? 'checked' : false );
                 }
                 // unblock auto-clicking loop
                 _parent_table.removeClass( '--changing-checkboxes' );
@@ -119,7 +119,7 @@ jQuery( function () {
             }
         
         // on change of every other input/select
-        } ).end().find( 'select, input[type="text"]' ).on( 'change', function () {
+        } ).on( 'change', 'select, input[type="text"]', function () {
             // update the hidden value
             _fps_strings.update_json( jQuery( this ) );
         } );

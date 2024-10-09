@@ -2,8 +2,8 @@
 Contributors: edersonpeka, benbenkert
 Tags: frontpage, scheduler, schedule, CMS, front page
 Requires at least: 5.0
-Tested up to: 6.6.1
-Stable tag: 0.1.7
+Tested up to: 6.6.2
+Stable tag: 0.1.8
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ederson@gmail.com&lc=BR&currency_code=BRL&item_name=Front%20Page%20Scheduler%20Wordpress%20Plugin
 
 Choose an alternate static front page to a specific daily period.
