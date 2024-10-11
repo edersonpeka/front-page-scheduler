@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: https://ederson.ferreira.tec.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.8
+Version: 0.1.9
 Author: Ederson Peka
 Author URI: https://profiles.wordpress.org/edersonpeka/
 Text Domain: front-page-scheduler
@@ -57,7 +57,7 @@ class front_page_scheduler {
             $original_frontpage = $frontpage;
 
             // saved options (rules)
-            $arr_options = get_option( 'front_page_scheduler_options' );
+            $arr_options = (array) get_option( 'front_page_scheduler_options' );
             // compatibility with legacy options format (which used to allow only one rule)
             if ( !array_key_exists( 'front_page_scheduler_json', $arr_options ) ) :
                 // if there's only one rule saved (legacy), we turn it into an "array of one rule"
@@ -166,51 +166,56 @@ class front_page_scheduler {
 
     // Sanitize our options
     public static function options_sanitize( $ops ) {
-        // sanitizing options array
-        if ( !is_array( $ops ) ) $ops = array();
-        // if we do not receive the expected format, we create an "empty" array
-        if ( !array_key_exists( 'front_page_scheduler_json', $ops ) ) $ops[ 'front_page_scheduler_json' ] = '[]';
-        // initializing rules array
-        $rules = array();
-        // try to decode received JSON
-        try {
-            $inputs = json_decode( $ops[ 'front_page_scheduler_json' ], true );
-        } catch (Exception $e) {
-            // any trouble? Sets an empty array and the show must go on
-            $inputs = array();
-        }
-        // iterating over groups of inputs
-        foreach ( $inputs as $input ) :
-            // initializing "suboptions" array
-            $options = array();
-            // submitted page on this group
-            $ps_page = intval( '0' . $input[ 'front_page_scheduler_page' ] );
-            // validation function
-            $func_valid_time = array( __CLASS__, 'valid_time' );
-            // get (and validate) time to start on this group
-            $ps_start = call_user_func( $func_valid_time, $input[ 'front_page_scheduler_start' ] );
-            // get (and validate) time to stop on this group
-            $ps_stop = call_user_func( $func_valid_time, $input[ 'front_page_scheduler_stop' ] );
-            // get week day on this group
-            $ps_weekday = array_filter( $input[ 'front_page_scheduler_weekday' ], 'is_numeric' );
-            // if day "0" (everyday) is set, it's the only day needed (cause it means "everyday", right?)
-            if ( in_array( 0, $ps_weekday ) ) $ps_weekday = array( 0 );
-
-            // if alternate page was set on this group
-            if ( $ps_page ) {
-
-                // save the options
-                $options[ 'front_page_scheduler_page' ] = $ps_page;
-                $options[ 'front_page_scheduler_start' ] = $ps_start;
-                $options[ 'front_page_scheduler_stop' ] = $ps_stop;
-                $options[ 'front_page_scheduler_weekday' ] = $ps_weekday;
-                // append to rules array
-                $rules[] = $options;
-
+        global $_front_page_scheduler_sanitize_not_first_call;
+        // avoiding weird wordpress bug that runs sanitize multiple times when you first save the option
+        if ( !isset( $_front_page_scheduler_sanitize_not_first_call ) ) :
+            $_front_page_scheduler_sanitize_not_first_call = true;
+            // sanitizing options array
+            if ( !is_array( $ops ) ) $ops = array();
+            // if we do not receive the expected format, we create an "empty" array
+            if ( !array_key_exists( 'front_page_scheduler_json', $ops ) ) $ops[ 'front_page_scheduler_json' ] = '[]';
+            // initializing rules array
+            $rules = array();
+            // try to decode received JSON
+            try {
+                $inputs = json_decode( (string) $ops[ 'front_page_scheduler_json' ], true );
+            } catch (Exception $e) {
+                // any trouble? Sets an empty array and the show must go on
+                $inputs = array();
             }
-        endforeach;
-        // merge rules
-        $ops[ 'front_page_scheduler_json' ] = $rules;
+            // iterating over groups of inputs
+            foreach ( $inputs as $input ) :
+                // initializing "suboptions" array
+                $options = array();
+                // submitted page on this group
+                $ps_page = intval( '0' . $input[ 'front_page_scheduler_page' ] );
+                // validation function
+                $func_valid_time = array( __CLASS__, 'valid_time' );
+                // get (and validate) time to start on this group
+                $ps_start = call_user_func( $func_valid_time, $input[ 'front_page_scheduler_start' ] );
+                // get (and validate) time to stop on this group
+                $ps_stop = call_user_func( $func_valid_time, $input[ 'front_page_scheduler_stop' ] );
+                // get week day on this group
+                $ps_weekday = array_filter( $input[ 'front_page_scheduler_weekday' ], 'is_numeric' );
+                // if day "0" (everyday) is set, it's the only day needed (cause it means "everyday", right?)
+                if ( in_array( 0, $ps_weekday ) ) $ps_weekday = array( 0 );
+
+                // if alternate page was set on this group
+                if ( $ps_page ) {
+
+                    // save the options
+                    $options[ 'front_page_scheduler_page' ] = $ps_page;
+                    $options[ 'front_page_scheduler_start' ] = $ps_start;
+                    $options[ 'front_page_scheduler_stop' ] = $ps_stop;
+                    $options[ 'front_page_scheduler_weekday' ] = $ps_weekday;
+                    // append to rules array
+                    $rules[] = $options;
+
+                }
+            endforeach;
+            // merge rules
+            $ops[ 'front_page_scheduler_json' ] = $rules;
+        endif;
         // return sanitized options
         return $ops;
     }
