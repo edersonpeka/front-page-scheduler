@@ -19,7 +19,7 @@ msgstr "Agendamento de página inicial alternativa para período diário especí
 
 #. Found in faq header.
 msgid "Installation Instructions"
-msgstr "Instruções de Instalação"
+msgstr "Instruções de instalação"
 
 #. Found in installation list item, faq list item.
 msgid "Now go to the 'Settings' section and select 'Reading', where you can configure your alternate front page"
@@ -45,22 +45,22 @@ msgid "Front Page Scheduler plugin let you choose an alternate static front page
 msgstr "O plugin <em>Front Page Scheduler</em> permite que você escolha uma página inicial alternativa para ser exibida durante um período diário específico."
 
 msgid "Alternate Front Page Scheduler"
-msgstr "Agendador de Página Inicial Alternativa"
+msgstr "Agendador de página inicial alternativa"
 
 msgid "Scheduling Rules"
-msgstr "Regras de Agendamento"
+msgstr "Regras de agendamento"
 
 msgid "Add Rule"
-msgstr "Nova Regra"
+msgstr "Nova regra"
 
 msgid "Remove Rule"
-msgstr "Remover Regra"
+msgstr "Remover regra"
 
 msgid "This action can not be undone! Are you sure?"
 msgstr "Esta ação não pode ser desfeita! Você tem certeza?"
 
 msgid "Alternate Front Page"
-msgstr "Página Inicial Alternativa"
+msgstr "Página inicial alternativa"
 
 msgid "Start at"
 msgstr "Começar às"
