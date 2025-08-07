@@ -3,9 +3,11 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: https://ederson.ferreira.tec.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.9
+Version: 0.1.91
 Author: Ederson Peka
 Author URI: https://profiles.wordpress.org/edersonpeka/
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: front-page-scheduler
 */
 
@@ -15,9 +17,6 @@ class front_page_scheduler {
 
     // Init
     public static function init() {
-        // Internationalization
-        load_plugin_textdomain( 'front-page-scheduler', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
         // Hooking into admin's screens
         add_action( 'admin_init', array( __CLASS__, 'admin_init' ) );
         // Overriding 'show_on_front' option: always 'page' in our specified period
