@@ -3,7 +3,7 @@
 Plugin Name: Front Page Scheduler
 Plugin URI: https://ederson.ferreira.tec.br
 Description: Front Page Scheduler plugin let you choose an alternate static front page to be shown during a specific daily period.
-Version: 0.1.91
+Version: 0.1.92
 Author: Ederson Peka
 Author URI: https://profiles.wordpress.org/edersonpeka/
 License: GPLv2 or later
@@ -91,14 +91,22 @@ class front_page_scheduler {
                     $ps_weekday = array_filter( $op_weekday, 'is_numeric' );
                     // if it's not, we assume it's zero
                     if ( !$ps_weekday ) $ps_weekday = array( 0 );
+                    $tzprev = false;
                     // set current timezone
-                    if ( $tz = get_option( 'timezone_string' ) ) date_default_timezone_set( $tz );
+                    if ( $tz = get_option( 'timezone_string' ) ) {
+                        // save current server tz
+                        $tzprev = date('e');
+                        // set php tz temporarily to wp tz
+                        date_default_timezone_set( $tz );
+                    }
                     // get the current time
                     $tnow = intval( date( 'Hi' ) );
                     // get the week day (today)
                     $twday = intval( date( 'w' ) ) + 1;
                     // get the week day (yesterday)
                     $twyes = ( ( $twday + 6 ) % 8 ) + 1;
+                    // set php tz back to original
+                    if ( $tzprev ) date_default_timezone_set( $tzprev );
 
                     // if our chosen period crosses the midnight, and we're
                     //   in it, let's return the alternate page id
